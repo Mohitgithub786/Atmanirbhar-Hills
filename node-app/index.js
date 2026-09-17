@@ -2,14 +2,21 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const fs = require("fs");
 var jwt = require("jsonwebtoken");
 const multer = require("multer");
 const productController = require("./controllers/productController");
 const userController = require("./controllers/userController");
 
+// Ensure uploads folder exists locally or in environment
+const uploadsDir = path.join(__dirname, "uploads");
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads");
+    cb(null, uploadsDir);
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
@@ -20,27 +27,31 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 const bodyParser = require("body-parser");
 const app = express();
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static(uploadsDir));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors({
     origin: "*"
 }));
 
-const port = 4000;
+const port = process.env.PORT || 4000;
 const mongoose = require("mongoose");
 
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log("Connected to MongoDB");
-  })
-  .catch((error) => {
-    console.log("Error connecting to mongodb", error);
-  });
+if (process.env.MONGODB_URI) {
+  mongoose
+    .connect(process.env.MONGODB_URI)
+    .then(() => {
+      console.log("Connected to MongoDB");
+    })
+    .catch((error) => {
+      console.log("Error connecting to mongodb", error);
+    });
+} else {
+  console.warn("WARNING: MONGODB_URI environment variable is not defined!");
+}
 
 app.get("/", (req, res) => {
-  res.send("hello...");
+  res.send("Atmanirbhar Hills API Server is Running");
 });
 
 app.get("/search", productController.search);
@@ -60,5 +71,8 @@ app.get("/get-user/:uId", userController.getUserById);
 app.post("/login", userController.login);
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Server listening on port ${port}`);
 });
+
+module.exports = app;
+
