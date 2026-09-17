@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
+import "./Cart.css";
 
 function Cart() {
   const [cart, setCart] = useState([
@@ -10,31 +11,44 @@ function Cart() {
       pname: "Himachali Woolen Cap/Topi",
       price: 399,
       quantity: 1,
-      image: "/images/11.jpg",
+      icon: "🧢",
     },
     {
       id: 2,
       pname: "Diya (Pack of 10)",
       price: 199,
       quantity: 2,
-      image: "/images/12.jpg",
+      icon: "🪔",
     },
     {
       id: 3,
       pname: "Riddhi Siddhi Kalash",
       price: 699,
       quantity: 1,
-      image: "/images/13.jpg",
+      icon: "🏺",
     },
   ]);
   const [showModal, setShowModal] = useState(false);
 
-  const handleRemove = (productId) => {
-    const updatedCart = cart.filter((item) => item.id !== productId);
-    setCart(updatedCart);
+  const handleQuantity = (id, delta) => {
+    setCart((prev) =>
+      prev
+        .map((item) => {
+          if (item.id === id) {
+            const newQty = item.quantity + delta;
+            return newQty > 0 ? { ...item, quantity: newQty } : null;
+          }
+          return item;
+        })
+        .filter(Boolean)
+    );
   };
 
-  const totalPrice = cart.reduce(
+  const handleRemove = (productId) => {
+    setCart((prev) => prev.filter((item) => item.id !== productId));
+  };
+
+  const subtotal = cart.reduce(
     (acc, product) => acc + product.price * product.quantity,
     0
   );
@@ -43,216 +57,145 @@ function Cart() {
     setShowModal(!showModal);
   };
 
+  const handlePaymentSuccess = (method) => {
+    alert(`🎉 Payment of ₹${subtotal} via ${method} Successful! Order Placed.`);
+    setCart([]);
+    setShowModal(false);
+  };
+
   return (
     <>
       <Header />
-      <div
-        style={{
-          padding: "20px",
-          maxWidth: "1000px",
-          margin: "0 auto",
-          backgroundColor: "#f9f9f9",
-        }}
-      >
-        <h2
-          style={{
-            textAlign: "center",
-            marginBottom: "20px",
-            color: "#6C0345",
-          }}
-        >
-          Your Cart
-        </h2>
-        {cart.length === 0 ? (
-          <p
-            style={{ textAlign: "center", fontSize: "18px", color: "#6C0345" }}
-          >
-            Your cart is empty!
-          </p>
-        ) : (
-          cart.map((product) => (
-            <div
-              key={product.id}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                backgroundColor: "#fff",
-                borderRadius: "8px",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                padding: "15px",
-                marginBottom: "20px",
-                transition: "transform 0.2s ease-in-out",
-              }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.transform = "scale(1.05)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.transform = "scale(1)")
-              }
-            >
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <img
-                  src={product.image}
-                  alt={product.pname}
-                  style={{
-                    width: "100px",
-                    height: "100px",
-                    objectFit: "cover",
-                    borderRadius: "8px",
-                    marginRight: "15px",
-                  }}
-                />
-                <div>
-                  <h3 style={{ fontSize: "18px", color: "#333" }}>
-                    {product.pname}
-                  </h3>
-                  <p style={{ color: "#777", margin: "5px 0" }}>
-                    Price: Rs. {product.price}
-                  </p>
-                  <p style={{ color: "#777", margin: "5px 0" }}>
-                    Quantity: {product.quantity}
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={() => handleRemove(product.id)}
-                style={{
-                  backgroundColor: "#dc3545",
-                  color: "#fff",
-                  borderRadius: "5px",
-                  padding: "8px 15px",
-                  border: "none",
-                  cursor: "pointer",
-                  fontWeight: "bold",
-                  transition: "background-color 0.3s ease",
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.backgroundColor = "#c82333")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.backgroundColor = "#dc3545")
-                }
-              >
-                Remove
-              </button>
-            </div>
-          ))
-        )}
-        {cart.length > 0 && (
-          <>
-            <div
-              style={{
-                textAlign: "center",
-                fontSize: "18px",
-                marginTop: "20px",
-              }}
-            >
-              <p style={{ color: "#6C0345" }}>
-                <strong>Total Price: Rs. 1297</strong>
+      <div className="cart-page-wrapper">
+        <div className="cart-main-container">
+          <h2 className="cart-header-title">
+            Shopping <span>Cart</span> ({cart.length})
+          </h2>
+
+          {cart.length === 0 ? (
+            <div className="cart-empty-box">
+              <div className="empty-icon">🛍️</div>
+              <h3>Your cart is empty!</h3>
+              <p style={{ color: "#64748b", margin: "10px 0 20px" }}>
+                Looks like you haven't added any hill crafts or organic items yet.
               </p>
-              <button
-                onClick={toggleModal}
-                style={{
-                  backgroundColor: "#28a745",
-                  color: "#fff",
-                  borderRadius: "5px",
-                  padding: "10px 20px",
-                  border: "none",
-                  cursor: "pointer",
-                  fontWeight: "bold",
-                }}
-              >
-                Proceed to Payment
-              </button>
+              <Link to="/" className="checkout-pay-btn" style={{ display: "inline-block", width: "auto", padding: "12px 30px" }}>
+                Start Shopping
+              </Link>
             </div>
-            {showModal && (
-              <div
-                style={{
-                  position: "fixed",
-                  top: "0",
-                  left: "0",
-                  width: "100%",
-                  height: "100%",
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <div
-                  style={{
-                    backgroundColor: "#fff",
-                    padding: "20px",
-                    borderRadius: "8px",
-                    width: "300px",
-                    textAlign: "center",
-                    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                  }}
-                >
-                  <h3 style={{ color: "#6C0345" }}>Select Payment Method</h3>
-                  <button
-                    style={{
-                      backgroundColor: "#007bff",
-                      color: "#fff",
-                      borderRadius: "5px",
-                      padding: "10px 20px",
-                      border: "none",
-                      marginBottom: "10px",
-                      width: "100%",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Cash on Delivery (COD)
-                  </button>
-                  <br />
-                  <button
-                    style={{
-                      backgroundColor: "#28a745",
-                      color: "#fff",
-                      borderRadius: "5px",
-                      padding: "10px 20px",
-                      border: "none",
-                      marginBottom: "10px",
-                      width: "100%",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Pay via UPI
-                  </button>
-                  <br />
-                  <button
-                    onClick={toggleModal}
-                    style={{
-                      backgroundColor: "#dc3545",
-                      color: "#fff",
-                      borderRadius: "5px",
-                      padding: "10px 20px",
-                      border: "none",
-                      marginTop: "10px",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Close
-                  </button>
-                </div>
+          ) : (
+            <div className="cart-layout-grid">
+              {/* Left Column: Cart Items List */}
+              <div className="cart-items-section">
+                {cart.map((product) => (
+                  <div key={product.id} className="cart-item-card">
+                    <div className="cart-item-left">
+                      <div className="cart-item-image-wrapper">
+                        <span className="cart-item-placeholder">{product.icon || "📦"}</span>
+                      </div>
+                      <div className="cart-item-info">
+                        <h3>{product.pname}</h3>
+                        <p className="cart-item-price">₹{product.price}</p>
+                        
+                        {/* Quantity Increment / Decrement */}
+                        <div className="cart-qty-controls">
+                          <button
+                            className="qty-btn"
+                            onClick={() => handleQuantity(product.id, -1)}
+                            title="Decrease quantity"
+                          >
+                            -
+                          </button>
+                          <span className="qty-val">{product.quantity}</span>
+                          <button
+                            className="qty-btn"
+                            onClick={() => handleQuantity(product.id, 1)}
+                            title="Increase quantity"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button
+                      className="cart-remove-btn"
+                      onClick={() => handleRemove(product.id)}
+                    >
+                      🗑️ Remove
+                    </button>
+                  </div>
+                ))}
               </div>
-            )}
-          </>
-        )}
-        <div style={{ textAlign: "center", marginTop: "20px" }}>
-          <Link
-            to="/"
-            style={{
-              color: "#6C0345",
-              textDecoration: "underline",
-              fontSize: "16px",
-            }}
-          >
-            Continue Shopping
-          </Link>
+
+              {/* Right Column: Order Summary Card */}
+              <div className="cart-summary-card">
+                <h3>Order Summary</h3>
+                <div className="summary-row">
+                  <span>Items Subtotal</span>
+                  <span>₹{subtotal}</span>
+                </div>
+                <div className="summary-row free">
+                  <span>Delivery Charge</span>
+                  <span>FREE 🎉</span>
+                </div>
+                <div className="summary-row free">
+                  <span>Artisan Vocal Subsidy</span>
+                  <span>- ₹0</span>
+                </div>
+
+                <div className="summary-total">
+                  <span>Total Amount</span>
+                  <span>₹{subtotal}</span>
+                </div>
+
+                <button className="checkout-pay-btn" onClick={toggleModal}>
+                  Proceed to Payment (₹{subtotal})
+                </button>
+
+                <Link to="/" className="continue-shopping-link">
+                  ← Continue Shopping
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
       </div>
+
+      {/* Payment Selection Modal */}
+      {showModal && (
+        <div className="payment-modal-backdrop" onClick={toggleModal}>
+          <div className="payment-modal-box" onClick={(e) => e.stopPropagation()}>
+            <h3>Select Payment Method</h3>
+            <p style={{ color: "#64748b", fontSize: "0.9rem", marginBottom: "20px" }}>
+              Total Payable: <strong>₹{subtotal}</strong>
+            </p>
+
+            <button
+              className="payment-option-btn upi"
+              onClick={() => handlePaymentSuccess("UPI / GPay / PhonePe")}
+            >
+              ⚡ Pay via UPI (Instant)
+            </button>
+            <button
+              className="payment-option-btn"
+              onClick={() => handlePaymentSuccess("Credit / Debit Card")}
+            >
+              💳 Credit / Debit Card
+            </button>
+            <button
+              className="payment-option-btn"
+              onClick={() => handlePaymentSuccess("Cash on Delivery")}
+            >
+              💵 Cash on Delivery (COD)
+            </button>
+
+            <button className="modal-close-btn" onClick={toggleModal}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
       <Footer />
     </>
   );
