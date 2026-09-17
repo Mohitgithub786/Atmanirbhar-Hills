@@ -49,6 +49,21 @@ function AddProduct() {
     });
   };
 
+  const handleGenerateAIDesc = () => {
+    if (!pname) {
+      alert("Please enter a Product Name first to generate description.");
+      return;
+    }
+    axios
+      .post(`${API_URL}/ai-generate-description`, { pname, category })
+      .then((res) => {
+        if (res.data?.description) {
+          setpdesc(res.data.description);
+        }
+      })
+      .catch((err) => console.error("AI Generation error:", err));
+  };
+
   return (
     <div>
       <Header />
@@ -63,7 +78,17 @@ function AddProduct() {
             setpname(e.target.value);
           }}
         />
-        <label style={{ color: "#6C0345" }}> Product Description </label>
+        <div className="d-flex justify-content-between align-items-center mt-2">
+          <label style={{ color: "#6C0345" }}> Product Description </label>
+          <button
+            type="button"
+            className="btn btn-sm text-white"
+            style={{ background: "linear-gradient(135deg, #ff6b6b, #4ecdc4)" }}
+            onClick={handleGenerateAIDesc}
+          >
+            ✨ Auto-Generate with AI
+          </button>
+        </div>
         <input
           className="form-control"
           type="text"

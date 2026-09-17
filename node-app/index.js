@@ -7,6 +7,7 @@ var jwt = require("jsonwebtoken");
 const multer = require("multer");
 const productController = require("./controllers/productController");
 const userController = require("./controllers/userController");
+const aiController = require("./controllers/aiController");
 
 // Ensure uploads folder exists locally or in environment
 const uploadsDir = path.join(__dirname, "uploads");
@@ -69,6 +70,10 @@ app.post("/signup", userController.signup);
 app.get("/my-profile/:userId", userController.myProfileById);
 app.get("/get-user/:uId", userController.getUserById);
 app.post("/login", userController.login);
+
+// AI Assistant & ML Generation Routes
+app.post("/ai-assistant", aiController.askAssistant);
+app.post("/ai-generate-description", aiController.generateDescription);
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);

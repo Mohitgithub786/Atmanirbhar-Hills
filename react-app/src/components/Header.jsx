@@ -5,6 +5,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AIChatbot from "./AIChatbot";
 
 function Header(props) {
   const [loc, setLoc] = useState(null);
@@ -163,6 +164,7 @@ function Header(props) {
         )}
       </div>
       <ToastContainer />
+      <AIChatbot />
     </div>
   );
 }
