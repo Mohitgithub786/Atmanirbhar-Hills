@@ -215,75 +215,131 @@ function Home() {
               })}
           </div>
 
-          <ul style={{ width: "100rem" }} className="list-group">
-            <a
-              style={{ backgroundColor: "#FFF8DC" }}
-              href="https://economictimes.indiatimes.com/news/india/atmanirbhar-bharat-campaign-becoming-a-mass-movement-pm-modi-in-mann-ki-baat/articleshow/114650147.cms"
-              className="list-group-item"
-              aria-current="true"
-            >
-              Atmanirbhar Bharat campaign becoming a mass movement: PM Modi in
-              'Mann Ki Baat'
-            </a>
-            <a
-              href="https://economictimes.indiatimes.com/news/india/ayodhya-ram-temple-not-to-use-chinese-diwali-decorative-items-trust/articleshow/114737014.cms"
-              className="list-group-item"
-            >
-              Ayodhya Ram Temple not to use Chinese Diwali decorative items:
-              Trust
-            </a>
-            <a
-              style={{ backgroundColor: "#FFF8DC" }}
-              href="https://economictimes.indiatimes.com/news/defence/to-save-flying-hours-iaf-inaugurates-c-295-simulator-to-train-pilots/articleshow/115226762.cms"
-              className="list-group-item"
-            >
-              To save flying hours, IAF inaugurates C-295 simulator to train
-              pilots
-            </a>
-            <a
-              href="https://economictimes.indiatimes.com/news/defence/govt-starts-process-of-procuring-surveillance-helicopters-with-accessories/articleshow/115219168.cms"
-              className="list-group-item"
-            >
-              Govt starts process of procuring surveillance helicopters with
-              accessories
-            </a>
-            <a
-              style={{ backgroundColor: "#FFF8DC" }}
-              href="https://economictimes.indiatimes.com/news/india/use-vedic-wisdom-to-do-better-with-lesser-resourcesnavi-radjou/articleshow/115310383.cms"
-              className="list-group-item"
-            >
-              Use Vedic wisdom to do better with lesser resources: Navi Radjou
-            </a>
-            <a
-              href="https://economictimes.indiatimes.com/news/economy/foreign-trade/consider-two-annual-editions-of-international-trade-fair-piyush-goyal-tells-itpo/articleshow/115303381.cms"
-              className="list-group-item"
-            >
-              Consider two annual editions of international trade fair: Piyush
-              Goyal tells ITPO
-            </a>
-            <a
-              style={{ backgroundColor: "#FFF8DC" }}
-              href="https://economictimes.indiatimes.com/industry/healthcare/biotech/pharmaceuticals/lyfius-pharma-penicillin-g-plant-inaugurated-by-pm-modi/articleshow/114737382.cms"
-              className="list-group-item"
-            >
-              Lyfius Pharma Penicillin-G plant inaugurated by PM Modi
-            </a>
-            <a
-              href="https://economictimes.indiatimes.com/news/india/pm-cites-popularity-of-chhota-bheem-urges-people-to-make-india-global-animation-powerhouse/articleshow/114651003.cms"
-              className="list-group-item"
-            >
-              PM cites popularity of 'Chhota Bheem', urges people to make India
-              global animation powerhouse
-            </a>
-            <a
-              style={{ backgroundColor: "#FFF8DC" }}
-              href="https://economictimes.indiatimes.com/industry/cons-products/durables/indias-consumer-durables-sector-set-to-grow-11-cagr-by-2029-creating-5-lakh-jobs/articleshow/114011033.cms"
-              className="list-group-item"
-            >
-              India's consumer durables sector set to grow 11% CAGR by 2029,
-              creating 5 lakh jobs
-            </a>
-          </ul>
+          {/* Modern News & Industry Updates Section */}
+          <div className="news-section-wrapper">
+            <div className="news-section-header">
+              <div>
+                <h3 className="news-title">📰 Latest Atmanirbhar & Economic Updates</h3>
+                <p className="news-subtitle">Stay informed about local industry, handicraft initiatives & economic growth</p>
+              </div>
+            </div>
+
+            <div className="news-grid">
+              <a
+                href="https://economictimes.indiatimes.com/news/india/atmanirbhar-bharat-campaign-becoming-a-mass-movement-pm-modi-in-mann-ki-baat/articleshow/114650147.cms"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="news-card-link"
+              >
+                <div className="news-card-top">
+                  <span className="news-tag">Mass Movement</span>
+                  <span className="news-source">Economic Times</span>
+                </div>
+                <h4 className="news-card-headline">
+                  Atmanirbhar Bharat campaign becoming a mass movement: PM Modi in 'Mann Ki Baat'
+                </h4>
+                <div className="news-card-footer">
+                  <span>Read Full Coverage</span>
+                  <span className="news-arrow">→</span>
+                </div>
+              </a>
+
+              <a
+                href="https://economictimes.indiatimes.com/news/india/ayodhya-ram-temple-not-to-use-chinese-diwali-decorative-items-trust/articleshow/114737014.cms"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="news-card-link"
+              >
+                <div className="news-card-top">
+                  <span className="news-tag">Local Crafts</span>
+                  <span className="news-source">Economic Times</span>
+                </div>
+                <h4 className="news-card-headline">
+                  Ayodhya Ram Temple not to use Chinese Diwali decorative items: Trust
+                </h4>
+                <div className="news-card-footer">
+                  <span>Read Full Coverage</span>
+                  <span className="news-arrow">→</span>
+                </div>
+              </a>
+
+              <a
+                href="https://economictimes.indiatimes.com/news/defence/to-save-flying-hours-iaf-inaugurates-c-295-simulator-to-train-pilots/articleshow/115226762.cms"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="news-card-link"
+              >
+                <div className="news-card-top">
+                  <span className="news-tag">Defence & Tech</span>
+                  <span className="news-source">Economic Times</span>
+                </div>
+                <h4 className="news-card-headline">
+                  To save flying hours, IAF inaugurates C-295 simulator to train pilots
+                </h4>
+                <div className="news-card-footer">
+                  <span>Read Full Coverage</span>
+                  <span className="news-arrow">→</span>
+                </div>
+              </a>
+
+              <a
+                href="https://economictimes.indiatimes.com/news/defence/govt-starts-process-of-procuring-surveillance-helicopters-with-accessories/articleshow/115219168.cms"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="news-card-link"
+              >
+                <div className="news-card-top">
+                  <span className="news-tag">Procurement</span>
+                  <span className="news-source">Economic Times</span>
+                </div>
+                <h4 className="news-card-headline">
+                  Govt starts process of procuring surveillance helicopters with accessories
+                </h4>
+                <div className="news-card-footer">
+                  <span>Read Full Coverage</span>
+                  <span className="news-arrow">→</span>
+                </div>
+              </a>
+
+              <a
+                href="https://economictimes.indiatimes.com/news/india/use-vedic-wisdom-to-do-better-with-lesser-resourcesnavi-radjou/articleshow/115310383.cms"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="news-card-link"
+              >
+                <div className="news-card-top">
+                  <span className="news-tag">Innovation</span>
+                  <span className="news-source">Economic Times</span>
+                </div>
+                <h4 className="news-card-headline">
+                  Use Vedic wisdom to do better with lesser resources: Navi Radjou
+                </h4>
+                <div className="news-card-footer">
+                  <span>Read Full Coverage</span>
+                  <span className="news-arrow">→</span>
+                </div>
+              </a>
+
+              <a
+                href="https://economictimes.indiatimes.com/news/economy/foreign-trade/consider-two-annual-editions-of-international-trade-fair-piyush-goyal-tells-itpo/articleshow/115303381.cms"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="news-card-link"
+              >
+                <div className="news-card-top">
+                  <span className="news-tag">Trade Fair</span>
+                  <span className="news-source">Economic Times</span>
+                </div>
+                <h4 className="news-card-headline">
+                  Consider two annual editions of international trade fair: Piyush Goyal tells ITPO
+                </h4>
+                <div className="news-card-footer">
+                  <span>Read Full Coverage</span>
+                  <span className="news-arrow">→</span>
+                </div>
+              </a>
+            </div>
+          </div>
         </div>
       )}
       <Footer />
